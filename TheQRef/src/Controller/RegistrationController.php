@@ -28,6 +28,9 @@ class RegistrationController
                 redirect("./register?error=notset");
             }
 
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                redirect("./register?error=email");
+            }
 
             if ($password !== $passwordConfrim) {
                 redirect("./register?error=password-mismatch");
@@ -71,6 +74,9 @@ class RegistrationController
                 $page->addParam("error", $errorView);
             } elseif ($errorMsg === "password-length") {
                 $errorView = new ErrorView("Password must have at least 5 characters.");
+                $page->addParam("error", $errorView);
+            }elseif ($errorMsg === "email") {
+                $errorView = new ErrorView("Please enter valid email address.");
                 $page->addParam("error", $errorView);
             }
 
