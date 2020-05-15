@@ -1,0 +1,14 @@
+<div class="question-result">
+    <div class="question-number">
+        #{{number}}
+    </div>
+    {=question.html}}
+    <div class="question-correct">
+        {% if '{{result}}'=='correct' %}
+        {{correct}}<br>Correct!
+        {% elseif '{{result}}'=='wrong' %} Wrong! <br>Correct: {{correct}} <br>Your: {{your}}
+        {% else %}
+
+        {% endif %}
+    </div>
+</div>

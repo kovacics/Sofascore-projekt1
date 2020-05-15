@@ -1,0 +1,9 @@
+<div class="choice-correct-input">
+    {% if {=q.type}}=='1' %}
+    <input type="radio" name="{=q.id}}" value="{=c.id}}" checked> {=c.text}}<br>
+    {% elseif {=q.type}}=='2' %}
+    <input type="checkbox" name="{=q.id}}[]" value="{=c.id}}" checked> {=c.text}}<br>
+    {% else %}
+    <input type="text" name="{=q.id}}" value="{{textAnswer}}"><br>
+    {% endif %}
+</div>
