@@ -157,6 +157,7 @@ class QuizEvaluateController
 
                 $addCommentForm = new CommentAddFormView($quizId);
                 $quizResultView->addParam("commentsForm", $addCommentForm);
+                $quizResultView->addParam("hasComments", true);
             }
 
             $quizResultView->addParam("result", $result);

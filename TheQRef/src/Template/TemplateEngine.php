@@ -11,9 +11,9 @@ class TemplateEngine
     private const VARIABLE_REGEX = "/{{\w+}}/";
     private const PROPERTY_REGEX = "/{=\w+.\w+}}/";
     private const FUNCTION_REGEX = "/{=\w+->\w+}}/";
-    private const IF_REGEX = "/{% IF (.*?) %}\s*(.*?)\s*{% ENDIF %}/i";
-    private const IF_ELSE_REGEX = "/{% IF (.*?) %}\s*(.*?)\s*{% ELSE %}\s*(.*?)\s*{% ENDIF %}/i";
-    private const IF_ELSEIF_ELSE_REGEX = "/{% IF (.*?) %}\s*(.*?)\s*{% ELSEIF (.*?) %}\s*(.*?)\s*{% ELSE %}\s*(.*?)\s*{% ENDIF %}/i";
+    private const IF_REGEX = "/{% IF (.*?) %}\s*(.*?)\s*{% ENDIF %}/is";
+    private const IF_ELSE_REGEX = "/{% IF (.*?) %}\s*(.*?)\s*{% ELSE %}\s*(.*?)\s*{% ENDIF %}/is";
+    private const IF_ELSEIF_ELSE_REGEX = "/{% IF (.*?) %}\s*(.*?)\s*{% ELSEIF (.*?) %}\s*(.*?)\s*{% ELSE %}\s*(.*?)\s*{% ENDIF %}/is";
     private const FOR_REGEX = "/{% for (\w+) in (\w+) %}\s*(.*?)\s*{% ENDFOR %}/is";
 
 
@@ -61,43 +61,6 @@ class TemplateEngine
             $this->html = str_replace($match, $replace, $this->html);
         }
 
-
-        $matches = [];
-        preg_match_all(self::IF_REGEX, $this->html, $matches);
-
-        // iteriraj po svim nadjenim if izrazima
-        for ($i = 0; $i < count($matches[0]); $i++) {
-            $fullMatch = $matches[0][$i];
-            $condition = $matches[1][$i];
-            $action = $matches[2][$i];
-
-            //todo varijable unutar if uvjeta sa zagradama?
-            if (eval('return (' . $condition . ');')) {
-                $this->html = str_replace($fullMatch, $action, $this->html);
-            } else {
-                $this->html = str_replace($fullMatch, "", $this->html);
-            }
-        }
-
-
-        $matches = [];
-        preg_match_all(self::IF_ELSE_REGEX, $this->html, $matches);
-
-        // iteriraj po svim nadjenim if izrazima
-        for ($i = 0; $i < count($matches[0]); $i++) {
-            $fullMatch = $matches[0][$i];
-            $condition = $matches[1][$i];
-            $actionIf = $matches[2][$i];
-            $actionElse = $matches[3][$i];
-
-            //todo varijable unutar if uvjeta sa zagradama?
-            if (eval('return (' . $condition . ');')) {
-                $this->html = str_replace($fullMatch, $actionIf, $this->html);
-            } else {
-                $this->html = str_replace($fullMatch, $actionElse, $this->html);
-            }
-        }
-
         $matches = [];
         preg_match_all(self::IF_ELSEIF_ELSE_REGEX, $this->html, $matches);
 
@@ -120,6 +83,40 @@ class TemplateEngine
             }
         }
 
+        $matches = [];
+        preg_match_all(self::IF_ELSE_REGEX, $this->html, $matches);
+
+        // iteriraj po svim nadjenim if izrazima
+        for ($i = 0; $i < count($matches[0]); $i++) {
+            $fullMatch = $matches[0][$i];
+            $condition = $matches[1][$i];
+            $actionIf = $matches[2][$i];
+            $actionElse = $matches[3][$i];
+
+            //todo varijable unutar if uvjeta sa zagradama?
+            if (eval('return (' . $condition . ');')) {
+                $this->html = str_replace($fullMatch, $actionIf, $this->html);
+            } else {
+                $this->html = str_replace($fullMatch, $actionElse, $this->html);
+            }
+        }
+
+        $matches = [];
+        preg_match_all(self::IF_REGEX, $this->html, $matches);
+
+        // iteriraj po svim nadjenim if izrazima
+        for ($i = 0; $i < count($matches[0]); $i++) {
+            $fullMatch = $matches[0][$i];
+            $condition = $matches[1][$i];
+            $action = $matches[2][$i];
+
+            //todo varijable unutar if uvjeta sa zagradama?
+            if (eval('return (' . $condition . ');')) {
+                $this->html = str_replace($fullMatch, $action, $this->html);
+            } else {
+                $this->html = str_replace($fullMatch, "", $this->html);
+            }
+        }
 
         $matches = [];
         preg_match_all(self::FOR_REGEX, $this->html, $matches);
