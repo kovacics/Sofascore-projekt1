@@ -7,15 +7,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav mr-auto">
             <a class="nav-link nav-item active" href="{{home_route}}">Home</a>
-            <a class="nav-link nav-item" href="{{logout_route}}">Logout</a>
             <a class="nav-link nav-item" href="{{profile_route}}">My profile</a>
             <a class="nav-link nav-item" href="{{new_quiz_route}}">New quiz</a>
             <a class="nav-link nav-item" href="{{quiz_list_route}}">Quiz list</a>
             <a class="nav-link nav-item" href="{{quiz_stats_route}}">Quiz statistics</a>
             <a class="nav-link nav-item" href="{{challenge_route}}">Quiz challenge</a>
         </div>
-        <span class="navbar-text ml-auto" style="color: yellow">
-               <strong>{{firstName}} {{lastName}}</strong>
-        </span>
+        <div class="navbar-text ml-auto">
+            <strong style="color: yellow">{{firstName}} {{lastName}}</strong>
+            <a class="btn-sm btn-secondary" style="background-color: gray;color: white;text-decoration: none" href="{{logout_route}}">Logout</a>
+        </div>
     </div>
 </nav>
