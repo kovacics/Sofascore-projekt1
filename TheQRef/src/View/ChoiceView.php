@@ -13,12 +13,14 @@ class ChoiceView implements View
     private Choice $choice;
     private Question $question;
     private bool $checked;
+    private ?string $textPlaceholder;
 
-    public function __construct(Choice $choice, Question $question, bool $checked = false)
+    public function __construct(Choice $choice, Question $question, bool $checked = false, ?string $textPlaceholder = null)
     {
         $this->choice = $choice;
         $this->question = $question;
         $this->checked = $checked;
+        $this->textPlaceholder = $textPlaceholder;
     }
 
 
@@ -26,7 +28,12 @@ class ChoiceView implements View
     {
         if($this->checked){
             $ct = new TemplateEngine("src/View/components/choice_correct.html");
-            $ct->addParam("textAnswer", __($this->question->correctTextAnswer));
+            if($this->textPlaceholder !== null){
+                $placeholder = $this->textPlaceholder;
+            } else{
+                $placeholder = $this->question->correctTextAnswer;
+            }
+            $ct->addParam("textAnswer", __($placeholder));
         } else{
             $ct = new TemplateEngine("src/View/components/choice.html");
         }

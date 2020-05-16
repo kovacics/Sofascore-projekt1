@@ -5,8 +5,8 @@
     {=question.html}}
     <div class="question-correct">
         {% if '{{result}}'=='correct' %}
-        {{correct}}<br>Correct!
-        {% elseif '{{result}}'=='wrong' %} Wrong! <br>Correct: {{correct}} <br>Your: {{your}}
+        Correct!
+        {% elseif '{{result}}'=='wrong' %} Wrong! <br>Correct: {{correct}}
         {% else %}
 
         {% endif %}

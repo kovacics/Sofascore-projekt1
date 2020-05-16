@@ -64,7 +64,8 @@ class QuizEvaluateController
                         $correct = Choice::getByFields(['questionId' => $q->id, 'correct' => true], Choice::FETCH_ONE);
 
                         if ($userAnswer === null) {
-                            $qResView = new QuestionResultView($q, false, $correct->text, "Empty", $i);
+                            $qResView = new QuestionResultView($q, false, $correct->text, $i, $userAnswer);
+
                             break;
                         }
 
@@ -73,10 +74,12 @@ class QuizEvaluateController
 
                         if ($choice->correct) {
                             $correctCouter++;
-                            $qResView = new QuestionResultView($q, true, $correct->text, $choice->text, $i);
+                            $qResView = new QuestionResultView($q, true, $correct->text, $i, $cua->choiceId);
+
 
                         } else {
-                            $qResView = new QuestionResultView($q, false, $correct->text, $choice->text, $i);
+                            $qResView = new QuestionResultView($q, false, $correct->text, $i, $cua->choiceId);
+
                         }
                         break;
 
@@ -90,7 +93,8 @@ class QuizEvaluateController
                             $correctText[] = $c->text;
                         }
                         if ($userAnswer === null) {
-                            $qResView = new QuestionResultView($q, false, implode(",", $correctText), "Empty", $i);
+                            $qResView = new QuestionResultView($q, false, implode(",", $correctText), $i, $userAnswer);
+
                             break;
                         }
 
@@ -105,29 +109,30 @@ class QuizEvaluateController
 
                         if ($correctChoiceIDs == $userChoiceIDs) {
                             $correctCouter++;
-                            $qResView = new QuestionResultView($q, true, implode(",", $correctText),
-                                implode(",", $userText), $i);
+                            $qResView = new QuestionResultView($q, true, implode(",", $correctText), $i, $userChoiceIDs);
 
 
                         } else {
-                            $qResView = new QuestionResultView($q, false, implode(",", $correctText),
-                                implode(",", $userText), $i);
+                            $qResView = new QuestionResultView($q, false, implode(",", $correctText), $i, $userChoiceIDs);
+
                         }
 
                         break;
 
                     case "3":
                         if ($userAnswer === null) {
-                            $qResView = new QuestionResultView($q, false, $q->correctTextAnswer, "Empty", $i);
+                            $qResView = new QuestionResultView($q, false, $q->correctTextAnswer, $i, $userAnswer);
+
                             break;
                         }
                         if ($q->correctTextAnswer === trim($userAnswer->textAnswer)) {
                             $correctCouter++;
-                            $qResView = new QuestionResultView($q, true, $q->correctTextAnswer, $userAnswer->textAnswer, $i);
+                            $qResView = new QuestionResultView($q, true, $q->correctTextAnswer, $i, $userAnswer->textAnswer);
 
 
                         } else {
-                            $qResView = new QuestionResultView($q, false, $q->correctTextAnswer, $userAnswer->textAnswer, $i);
+                            $qResView = new QuestionResultView($q, false, $q->correctTextAnswer, $i, $userAnswer->textAnswer);
+
                         }
                 }
                 $questionViews[] = $qResView;
