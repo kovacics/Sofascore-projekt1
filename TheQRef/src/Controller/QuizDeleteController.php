@@ -5,6 +5,7 @@ namespace src\controller;
 
 
 use src\model\Quiz;
+use src\route\Route;
 use src\View\ForbiddenView;
 
 session_start();
@@ -25,7 +26,7 @@ class QuizDeleteController
 
         Quiz::deleteWithPK($quizId);
 
-        redirect("./quiz-all");
+        redirect(Route::get("quizList")->generate());
     }
 
 }

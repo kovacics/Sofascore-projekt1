@@ -3,6 +3,7 @@
 namespace src\controller;
 
 use src\model\User;
+use src\route\Route;
 use src\template\TemplateEngine;
 use src\View\ErrorView;
 use src\View\NavbarView;
@@ -22,20 +23,22 @@ class LoginController
         } else {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+                $route = Route::get("login")->generate();
+
                 $email = post('email');
                 $password = post('password');
 
                 if (!(paramExists($email) && paramExists($password))) {
-                    redirect("./login?error=notset");
+                    redirect("$route?error=notset");
                 }
 
                 $user = User::getBy("email", $email, User::FETCH_ONE);
 
                 if ($user === null) {
-                    redirect("./login?error=wrongInputs");
+                    redirect("$route?error=wrongInputs");
                 }
                 if (!password_verify($password, rtrim($user->password))) {
-                    redirect("./login?error=wrongInputs");
+                    redirect("$route?error=wrongInputs");
                 }
 
                 $_SESSION['userID'] = (int)$user->id;

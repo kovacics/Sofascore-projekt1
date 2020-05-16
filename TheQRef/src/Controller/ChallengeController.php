@@ -6,6 +6,7 @@ namespace src\controller;
 
 use src\model\Choice;
 use src\model\Question;
+use src\route\Route;
 use src\template\TemplateEngine;
 use src\View\NavbarView;
 use src\View\QuestionResultView;
@@ -20,6 +21,7 @@ class ChallengeController
         $navbar = new NavbarView();
         $quizPlay = new TemplateEngine("src/View/pages/quiz_challenge_start.html");
         $quizPlay->addParam("navbar", $navbar->getHtml());
+        $quizPlay->addParam("play_challenge_route", Route::get("challenge-play")->generate());
         echo $quizPlay->getHtml();
     }
 

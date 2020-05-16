@@ -37,7 +37,7 @@ class DefaultRoute extends Route
         $this->regex = $input;
         $this->namedGroupMap = $regex;
         foreach ($regex as $key => $value) {
-            $this->regex = (string)preg_replace("/<$key>/", $value, $this->regex);
+            $this->regex = (string)preg_replace("~<$key>~", $value, $this->regex);
         }
     }
 
@@ -61,7 +61,7 @@ class DefaultRoute extends Route
      */
     public function match(string $input): bool
     {
-        return preg_match("/^$this->regex$/", $input) === 1 ? true : false;
+        return preg_match("~^$this->regex$~", $input) === 1 ? true : false;
     }
 
     /**
@@ -78,9 +78,9 @@ class DefaultRoute extends Route
             if (!isset($array[$key])) {
                 $replacement = "-Missing param $key-";
             } else {
-                $replacement = preg_match("/$value/", $array[$key]) ? $array[$key] : "-Value $key not valid-";
+                $replacement = preg_match("~$value~", $array[$key]) ? $array[$key] : "-Value $key not valid-";
             }
-            $result = preg_replace("/<$key>/", $replacement, $result);
+            $result = preg_replace("~<$key>~", $replacement, $result);
         }
         return $result;
     }

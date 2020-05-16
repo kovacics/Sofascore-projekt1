@@ -5,6 +5,7 @@ namespace src\controller;
 
 
 use src\model\User;
+use src\route\Route;
 use src\template\TemplateEngine;
 use src\View\ErrorView;
 use src\View\ForbiddenView;
@@ -26,23 +27,26 @@ class PasswordChangeController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $route = Route::get("passChange")->generate();
+
+
             $password = post('password');
             $passwordConfirm = post('passwordConfirm');
             $newPassword = post('newPassword');
 
             if (!(paramExists($passwordConfirm) && paramExists($password) && paramExists($newPassword))) {
-                redirect("./password-change?error=notset");
+                redirect("$route?error=notset");
             }
 
 
             $user = User::get(userID());
 
             if ($password !== $passwordConfirm) {
-                redirect("./password-change?error=password-mismatch");
+                redirect("$route?error=password-mismatch");
             }
 
             if (!password_verify($password, rtrim($user->password))) {
-                redirect("./password-change?error=wrongInputs");
+                redirect("$route?error=wrongInputs");
             }
 
             //all good

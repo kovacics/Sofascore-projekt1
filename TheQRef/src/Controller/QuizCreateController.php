@@ -7,6 +7,7 @@ namespace src\controller;
 use src\model\Choice;
 use src\model\Question;
 use src\model\Quiz;
+use src\route\Route;
 use src\template\TemplateEngine;
 use src\View\ErrorView;
 use src\View\ForbiddenView;
@@ -26,6 +27,9 @@ class QuizCreateController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $route = Route::get("newQuiz")->generate();
+
+
             $name = post("name");
             $description = post("description");
             $qref = post("qref");
@@ -34,7 +38,7 @@ class QuizCreateController
 
             if (!(paramExists($name) && paramExists($description) &&
                 (paramExists($qref) || $this->isFileUploaded()))) {
-                redirect("./quiz-new?error=notset");
+                redirect("$route?error=notset");
             }
 
             if (paramExists($public) && $public === "true") {

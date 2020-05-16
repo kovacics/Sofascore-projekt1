@@ -47,12 +47,12 @@
             <tbody>
             {% for quiz in myQuizes %}
             <tr>
-                <td><a href="./showQuiz?quizId={{%quiz.id}}">{{%quiz.name}}</a></td>
+                <td><a href="{{show_quiz_route}}?quizId={{%quiz.id}}">{{%quiz.name}}</a></td>
                 <td>{{%quiz.description}}</td>
                 <td>{{%quiz.canBeCommented}}</td>
                 <td>{{%quiz.private}}</td>
-                <td><a href="./editQuiz?quizId={{%quiz.id}}">Edit</a></td>
-                <td><a class="btn btn-primary" href="./quiz-play?quizId={{%quiz.id}}">Play</a></td>
+                <td><a href="{{edit_quiz_route}}?quizId={{%quiz.id}}">Edit</a></td>
+                <td><a class="btn btn-primary" href="{{play_quiz_route}}?quizId={{%quiz.id}}">Play</a></td>
                 <td>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteQuizModal">
                         Delete
@@ -73,7 +73,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button onclick="location.href='./deleteQuiz?quizId={{%quiz.id}}'" type="button"
+                                <button onclick="location.href='{{delete_quiz_route}}?quizId={{%quiz.id}}'" type="button"
                                         class="btn btn-danger">Delete
                                 </button>
                             </div>
@@ -101,7 +101,7 @@
             <tr>
                 <td>{{%quiz.name}}</td>
                 <td>{{%quiz.description}}</td>
-                <td><a class="btn btn-primary" href="./quiz-play?quizId={{%quiz.id}}">Play</a></td>
+                <td><a class="btn btn-primary" href="{{play_quiz_route}}?quizId={{%quiz.id}}">Play</a></td>
             </tr>
             {% endfor %}
             </tbody>

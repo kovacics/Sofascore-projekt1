@@ -6,6 +6,7 @@ namespace src\controller;
 
 use src\DB\DAOSQL;
 use src\db\DBPool;
+use src\route\Route;
 use src\template\TemplateEngine;
 use src\View\ForbiddenView;
 use src\View\NavbarView;
@@ -36,6 +37,11 @@ class QuizListController
         $page->addParam("myQuizes", $this->quizDAO->getAllCreatedByUser(userID()));
         $page->addParam("otherQuizes", $this->quizDAO->getAllCreatedByOtherUsers(userID()));
         $page->addParam("navbar", $navbar->getHtml());
+
+        $page->addParam("show_quiz_route", Route::get("show-quiz")->generate());
+        $page->addParam("edit_quiz_route", Route::get("edit-quiz")->generate());
+        $page->addParam("play_quiz_route", Route::get("play-quiz")->generate());
+        $page->addParam("delete_quiz_route", Route::get("delete-quiz")->generate());
         echo $page->getHtml();
     }
 

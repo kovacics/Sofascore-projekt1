@@ -9,6 +9,7 @@ use src\model\Question;
 use src\model\Quiz;
 use src\model\QuizPlay;
 use src\model\UserAnswer;
+use src\route\Route;
 use src\template\TemplateEngine;
 use src\View\ForbiddenView;
 use src\View\NavbarView;
@@ -66,7 +67,8 @@ class QuizPlayController
 
 
             //all saved
-            redirect("./show-result?quizPlayId=" . $quizPlay->getPrimaryKey());
+            $route = Route::get("show-res")->generate();
+            redirect("$route?quizPlayId=" . $quizPlay->getPrimaryKey());
 
         } else {
 

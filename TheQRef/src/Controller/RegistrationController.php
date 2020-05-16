@@ -3,6 +3,7 @@
 namespace src\controller;
 
 use src\model\User;
+use src\route\Route;
 use src\template\TemplateEngine;
 use src\View\ErrorView;
 use src\View\NavbarView;
@@ -16,6 +17,9 @@ class RegistrationController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $route = Route::get("register")->generate();
+
+
             $firstName = post('firstName');
             $lastName = post('lastName');
             $dob = post('dob');
@@ -25,25 +29,25 @@ class RegistrationController
 
             if (!(paramExists($firstName) && paramExists($lastName) && paramExists($dob) &&
                 paramExists($email) && paramExists($password) && paramExists($passwordConfrim))) {
-                redirect("./register?error=notset");
+                redirect("$route?error=notset");
             }
 
             if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                redirect("./register?error=email");
+                redirect("$route?error=email");
             }
 
             if ($password !== $passwordConfrim) {
-                redirect("./register?error=password-mismatch");
+                redirect("$route?error=password-mismatch");
             }
 
             if (strlen($password) < 5) {
-                redirect("./register?error=password-length");
+                redirect("$route?error=password-length");
             }
 
             $user = User::getBy("email", $email, User::FETCH_ONE);;
 
             if ($user !== null) {
-                redirect("./register?error=exist");
+                redirect("$route?error=exist");
             }
 
             $user = new User();

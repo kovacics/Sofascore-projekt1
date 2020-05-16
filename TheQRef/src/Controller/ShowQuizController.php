@@ -4,6 +4,7 @@
 namespace src\controller;
 
 
+use src\dispatch\DefaultDispatcher;
 use src\model\Comment;
 use src\model\Quiz;
 use src\template\TemplateEngine;
