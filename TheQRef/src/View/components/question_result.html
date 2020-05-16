@@ -3,12 +3,11 @@
         #{{number}}
     </div>
     {=question.html}}
-    <div class="question-correct">
-        {% if '{{result}}'=='correct' %}
-        Correct!
-        {% elseif '{{result}}'=='wrong' %} Wrong! <br>Correct: {{correct}}
-        {% else %}
+    {% if '{{result}}'=='correct' %}
+    <div class="question-correct" style="background-color: #8cff66"><strong>Correct!</strong></div>
+    {% elseif '{{result}}'=='wrong' %}
+    <div class="question-correct" style="background-color: #ff4d4d">Wrong! <br>Correct: <strong>{{correct}}</strong></div>
+    {% else %}
 
-        {% endif %}
-    </div>
+    {% endif %}
 </div>
